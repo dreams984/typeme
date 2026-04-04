@@ -31,10 +31,8 @@ body{background:#f0f2f5;display:flex;flex-direction:column;align-items:center;pa
 @media(min-width:769px){.wrapper{padding:30px;}}
 </style>
 
-<!-- AdSense script -->
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR-ADSENSE-ID"
 crossorigin="anonymous"></script>
-
 </head>
 <body>
 
@@ -115,88 +113,105 @@ const typingText = document.querySelector(".typing-text p"),
       mistakeTag = document.querySelectorAll(".result-details b")[2],
       accuracyTag = document.querySelectorAll(".result-details b")[3];
 
-let timer, maxTime = 60, timeLeft = maxTime, charIndex = 0, mistakes = 0, isTyping = false, testEnded = false;
+let timer, maxTime=60, timeLeft=maxTime, charIndex=0, mistakes=0, isTyping=false, testEnded=false;
 
-const paragraphs = [
-"Practice daily to improve your typing speed and accuracy. Consistency is key!",
-"Typing fast helps you save time and boost productivity. Focus on accuracy first.",
-"Use all your fingers while typing and avoid looking at the keyboard. This increases speed.",
-"Start with simple sentences and gradually move to complex paragraphs to challenge yourself.",
-"Correct posture and relaxed hands can significantly improve your typing performance.",
-"The more you practice, the better your speed and accuracy will become over time.",
-"TypingTest.com style practice helps you stay motivated while tracking your progress."
-];
+// Paragraph pools by estimated time
+const paragraphs = {
+    15: [
+        "Quick typing improves speed!",
+        "Practice daily for results.",
+        "Focus on accuracy first."
+    ],
+    30: [
+        "Typing fast helps you save time and boost productivity.",
+        "Short daily practice improves accuracy and speed.",
+        "Use proper fingers and correct posture."
+    ],
+    60: [
+        "Practice daily to improve your typing speed and accuracy. Consistency is key for long-term progress.",
+        "Use all your fingers while typing and avoid looking at the keyboard to increase speed.",
+        "Typing longer paragraphs helps you improve focus, speed, and accuracy simultaneously."
+    ],
+    120: [
+        "Typing is an essential skill in today’s world. Practicing long paragraphs regularly improves speed, accuracy, and concentration. Focus on consistency and using all fingers correctly to achieve maximum performance over time.",
+        "Long typing sessions challenge your endurance and accuracy. Combining practice with proper posture and minimal errors ensures significant improvements in words per minute.",
+        "Advanced typing exercises involve multiple paragraphs, punctuation, and capitalization to simulate real typing environments and improve overall performance."
+    ]
+};
 
 function loadParagraph(){
-    const randomIndex = Math.floor(Math.random()*paragraphs.length);
+    const pool = paragraphs[maxTime] || paragraphs[60];
+    const randomIndex = Math.floor(Math.random()*pool.length);
+    const text = pool[randomIndex];
+    
     typingText.innerHTML = "";
-    paragraphs[randomIndex].split("").forEach((char,index)=>{
+    text.split("").forEach((char,index)=>{
         const span = document.createElement("span");
         span.innerText = char;
-        if(index === 0) span.classList.add("current");
+        if(index===0) span.classList.add("current");
         typingText.appendChild(span);
     });
-    charIndex = mistakes = 0;
-    timeLeft = maxTime;
-    testEnded = false;
+    
+    charIndex=mistakes=0;
+    timeLeft=maxTime;
+    testEnded=false;
     timeDisplay.innerText = timeLeft+"s";
-    wpmTag.innerText = 0;
-    mistakeTag.innerText = 0;
-    accuracyTag.innerText = "0%";
-    inpField.value = "";
-    inpField.disabled = false;
+    wpmTag.innerText=0;
+    mistakeTag.innerText=0;
+    accuracyTag.innerText="0%";
+    inpField.value="";
+    inpField.disabled=false;
     inpField.focus();
     clearInterval(timer);
-    isTyping = false;
+    isTyping=false;
 }
 
 function setTime(t){
-    maxTime = t;
+    maxTime=t;
     document.querySelectorAll(".settings button").forEach(btn => btn.classList.remove("active"));
     event.target.classList.add("active");
     loadParagraph();
 }
 
 function initTyping(){
-    if(testEnded) return; // Stop typing after test ends
+    if(testEnded) return;
     const characters = typingText.querySelectorAll("span");
     let typedChar = inpField.value[charIndex];
 
     if(!isTyping){
-        timer = setInterval(updateTimer,1000);
-        isTyping = true;
+        timer=setInterval(updateTimer,1000);
+        isTyping=true;
     }
 
     if(charIndex < characters.length){
-        if(typedChar == null) charIndex--;
+        if(typedChar==null) charIndex--;
         else{
-            if(typedChar === characters[charIndex].innerText){
+            if(typedChar===characters[charIndex].innerText){
                 characters[charIndex].classList.add("correct");
                 characters[charIndex].classList.remove("incorrect");
-            } else {
+            } else{
                 characters[charIndex].classList.add("incorrect");
                 characters[charIndex].classList.remove("correct");
                 mistakes++;
             }
             characters.forEach(span => span.classList.remove("current"));
             charIndex++;
-            if(charIndex < characters.length) characters[charIndex].classList.add("current");
+            if(charIndex<characters.length) characters[charIndex].classList.add("current");
         }
     }
 
-    // Update results live
-    let wpm = Math.round(((charIndex - mistakes)/5)/((maxTime - timeLeft)/60));
-    wpm = wpm < 0 || !wpm || wpm===Infinity ? 0 : wpm;
-    let accuracy = charIndex>0 ? Math.round(((charIndex - mistakes)/charIndex)*100) : 0;
-    wpmTag.innerText = wpm;
-    mistakeTag.innerText = mistakes;
-    accuracyTag.innerText = accuracy+"%";
+    let wpm = Math.round(((charIndex-mistakes)/5)/((maxTime-timeLeft)/60));
+    wpm = wpm<0||!wpm||wpm===Infinity?0:wpm;
+    let accuracy = charIndex>0 ? Math.round(((charIndex-mistakes)/charIndex)*100) : 0;
+    wpmTag.innerText=wpm;
+    mistakeTag.innerText=mistakes;
+    accuracyTag.innerText=accuracy+"%";
 }
 
 function updateTimer(){
     if(timeLeft>0){
         timeLeft--;
-        timeDisplay.innerText = timeLeft+"s";
+        timeDisplay.innerText=timeLeft+"s";
     } else{
         clearInterval(timer);
         endTest();
@@ -204,25 +219,22 @@ function updateTimer(){
 }
 
 function endTest(){
-    testEnded = true;
-    inpField.disabled = true; // Stop typing
+    testEnded=true;
+    inpField.disabled=true;
     const characters = typingText.querySelectorAll("span");
-    // Highlight remaining characters as not typed
     for(let i=charIndex;i<characters.length;i++){
         characters[i].classList.remove("current");
     }
-    // Final WPM and accuracy calculation
-    let wpm = Math.round(((charIndex - mistakes)/5)/(maxTime/60));
+    let wpm = Math.round(((charIndex-mistakes)/5)/(maxTime/60));
     wpm = wpm<0||!wpm||wpm===Infinity?0:wpm;
-    let accuracy = charIndex>0 ? Math.round(((charIndex - mistakes)/charIndex)*100) : 0;
-    wpmTag.innerText = wpm;
-    mistakeTag.innerText = mistakes;
-    accuracyTag.innerText = accuracy+"%";
+    let accuracy = charIndex>0 ? Math.round(((charIndex-mistakes)/charIndex)*100) : 0;
+    wpmTag.innerText=wpm;
+    mistakeTag.innerText=mistakes;
+    accuracyTag.innerText=accuracy+"%";
 }
 
-refreshBtn.addEventListener("click", loadParagraph);
-inpField.addEventListener("input", initTyping);
-
+refreshBtn.addEventListener("click",loadParagraph);
+inpField.addEventListener("input",initTyping);
 loadParagraph();
 </script>
 
