@@ -1,187 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TYPEME | Typing Speed Test</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
-        
-        *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-        body{background:#f0f2f5;display:flex;flex-direction:column;align-items:center;padding:15px;}
-        
-        [span_0](start_span)/* TYPEME Logo[span_0](end_span) */
-        .logo{font-size:clamp(30px, 6vw, 45px);font-weight:700;color:#2c3e50;text-align:center;margin-bottom: 20px;}
-        .logo span{background:#17A2B8;color:#fff;padding:0 12px;border-radius:8px;margin-left: 5px;}
-        
-        .wrapper{width:100%;max-width:800px;background:#fff;padding:35px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.1);}
-        
-        [span_1](start_span)/* Timer Buttons[span_1](end_span) */
-        .settings{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
-        .settings button{padding:8px 16px;border:1px solid #ddd; border-radius:20px;cursor:pointer; background: white;}
-        .settings button.active{background:#17A2B8;color:#fff; border-color: #17A2B8;}
-        
-        [span_2](start_span)/* Typing Area[span_2](end_span) */
-        .typing-text{max-height:250px;overflow:auto;background:#f9f9f9;padding:15px;border-radius:10px;font-size:22px;line-height:1.6; border: 1px solid #eee; margin-bottom: 20px;}
-        .typing-text span.correct{color:#28a745;}
-        .typing-text span.incorrect{color:#dc3545; background: #ffd7d7; border-radius: 4px;}
-        .typing-text span.current{text-decoration:underline; color: #17A2B8;}
-        
-        .input-field{position:absolute;opacity:0;pointer-events:none;}
-        
-        [span_3](start_span)/* Result Dashboard[span_3](end_span) */
-        .result-details{display:flex; justify-content: space-around; background: #2c3e50; padding: 20px; border-radius: 12px; color: #fff; list-style: none; margin-bottom: 20px;}
-        .result-details li b{color: #17A2B8; font-size: 24px; display: block;}
-        
-        .btn-refresh{width: 100%; background:#17A2B8;color:#fff;border:none;padding:15px;border-radius:10px;cursor:pointer; font-size: 18px; font-weight: 600;}
-        
-        [span_4](start_span)/* AdSense Slots[span_4](end_span) */
-        .ad-slot{width: 100%; max-width: 800px; margin: 15px 0; background: #e9ecef; border: 1px dashed #bbb; text-align: center; padding: 10px; color: #777; font-size: 12px;}
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TYPEME | Free Typing Speed Test</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+body{background:#f0f2f5;display:flex;flex-direction:column;align-items:center;padding:15px;}
+.logo{font-size:clamp(28px,5vw,42px);font-weight:700;color:#17A2B8;text-align:center;}
+.logo span{background:#17A2B8;color:#fff;padding:0 10px;border-radius:5px;}
+.wrapper{width:100%;max-width:800px;background:#fff;padding:30px;border-radius:15px;box-shadow:0 10px 30px rgba(0,0,0,0.1);}
+.settings{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+.settings button{padding:8px 16px;border:none;border-radius:20px;cursor:pointer;}
+.settings button.active{background:#17A2B8;color:#fff;}
+.typing-text{max-height:250px;overflow:auto;background:#f9f9f9;padding:15px;border-radius:10px;font-size:clamp(16px,2.5vw,22px);line-height:1.6;}
+.typing-text span.correct{color:green;}
+.typing-text span.incorrect{color:red;}
+.typing-text span.current{text-decoration:underline;}
+.input-field{position:absolute;opacity:0;pointer-events:none;}
+.content{margin-top:20px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.result-details{display:flex;flex-wrap:wrap;gap:10px;list-style:none;}
+.btn-refresh{background:#17A2B8;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;}
+.info-section{max-width:800px;width:100%;margin-top:30px;line-height:1.7;padding:0 10px;}
+.info-section h2{color:#17A2B8;margin:15px 0;}
+.adsbygoogle{margin:20px auto;}
+.footer{margin-top:30px;font-size:12px;text-align:center;}
+@media(max-width:480px){.content{flex-direction:column;align-items:flex-start;}.btn-refresh{width:100%;}}
+@media(min-width:481px) and (max-width:768px){.wrapper{padding:20px;}}
+@media(min-width:769px){.wrapper{padding:30px;}}
+</style>
+
+<!-- AdSense script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=YOUR-ADSENSE-ID"
+crossorigin="anonymous"></script>
+
 </head>
 <body>
 
 <h1 class="logo">TYPE<span>ME</span></h1>
 
-<div class="ad-slot">
-    ADSENSE TOP AD
-</div>
+<!-- TOP AD -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="YOUR-ADSENSE-ID"
+     data-ad-slot="YOUR-AD-SLOT"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
 
 <div class="wrapper">
-    <div class="settings">
-        <button onclick="setTime(15)">15s</button>
-        <button onclick="setTime(30)">30s</button>
-        <button class="active" onclick="setTime(60)">60s</button>
-        <button onclick="setTime(120)">120s</button>
-    </div>
+<h2>Free Online Typing Speed Test</h2>
 
-    <input type="text" class="input-field">
-    <div class="typing-text"><p></p></div>
-
-    <ul class="result-details">
-        <li>Time: <b>60s</b></li>
-        <li>WPM: <b>0</b></li>
-        <li>Errors: <b>0</b></li>
-        <li>Accuracy: <b>0%</b></li>
-    </ul>
-    
-    <button class="btn-refresh">Restart Test</button>
+<div class="settings">
+<button onclick="setTime(15)">15s</button>
+<button onclick="setTime(30)">30s</button>
+<button class="active" onclick="setTime(60)">60s</button>
+<button onclick="setTime(120)">120s</button>
 </div>
 
-<div class="ad-slot">
-    ADSENSE BOTTOM AD
+<input type="text" class="input-field">
+
+<div class="typing-text"><p></p></div>
+
+<div class="content">
+<ul class="result-details">
+<li>Time: <b>60s</b></li>
+<li>WPM: <b>0</b></li>
+<li>Errors: <b>0</b></li>
+<li>Accuracy: <b>0%</b></li>
+</ul>
+<button class="btn-refresh">Restart Test</button>
 </div>
+</div>
+
+<div class="info-section">
+<h2>Improve Your Typing Speed</h2>
+<p>Typing speed is an essential skill in today's digital world. This free typing test helps you measure your WPM and accuracy.</p>
+
+<h2>What is WPM?</h2>
+<p>WPM (Words Per Minute) measures how fast you type. Average typing speed is 40 WPM.</p>
+
+<h2>Tips to Improve Typing Speed</h2>
+<p>Practice daily, focus on accuracy, and use all fingers.</p>
+
+<!-- MIDDLE AD -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="YOUR-ADSENSE-ID"
+     data-ad-slot="YOUR-AD-SLOT"
+     data-ad-layout="in-article"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+<h2>Why Use TYPEME?</h2>
+<p>This tool is fast, responsive, and completely free to use.</p>
+</div>
+
+<!-- BOTTOM AD -->
+<ins class="adsbygoogle"
+     style="display:block"
+     data-ad-client="YOUR-ADSENSE-ID"
+     data-ad-slot="YOUR-AD-SLOT"
+     data-ad-format="auto"></ins>
+<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+
+<div class="footer">© 2026 TYPEME</div>
 
 <script>
 const typingText = document.querySelector(".typing-text p"),
       inpField = document.querySelector(".input-field"),
       refreshBtn = document.querySelector(".btn-refresh"),
-      timeTag = document.querySelectorAll(".result-details b")[0],
+      timeDisplay = document.querySelectorAll(".result-details b")[0],
       wpmTag = document.querySelectorAll(".result-details b")[1],
       mistakeTag = document.querySelectorAll(".result-details b")[2],
       accuracyTag = document.querySelectorAll(".result-details b")[3];
 
-let timer, maxTime = 60, timeLeft = maxTime, charIndex = 0, mistakes = 0, isTyping = false;
+let timer, maxTime = 60, timeLeft = maxTime, charIndex = 0, mistakes = 0, isTyping = false, testEnded = false;
 
-[span_5](start_span)// Paragraph samples[span_5](end_span)
 const paragraphs = [
-    "Typing speed is a critical skill for productivity in the modern world. Practice makes perfect.",
-    "Consistency is key when learning a new skill. Try to type for at least ten minutes every day.",
-    "The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.",
-    "Focus on accuracy before speed. Once you stop making mistakes, your speed will naturally increase."
+"Practice daily to improve your typing speed and accuracy. Consistency is key!",
+"Typing fast helps you save time and boost productivity. Focus on accuracy first.",
+"Use all your fingers while typing and avoid looking at the keyboard. This increases speed.",
+"Start with simple sentences and gradually move to complex paragraphs to challenge yourself.",
+"Correct posture and relaxed hands can significantly improve your typing performance.",
+"The more you practice, the better your speed and accuracy will become over time.",
+"TypingTest.com style practice helps you stay motivated while tracking your progress."
 ];
 
-function loadParagraph() {
-    const ranIndex = Math.floor(Math.random() * paragraphs.length);
+function loadParagraph(){
+    const randomIndex = Math.floor(Math.random()*paragraphs.length);
     typingText.innerHTML = "";
-    [span_6](start_span)// split text into spans[span_6](end_span)
-    paragraphs[ranIndex].split("").forEach(char => {
-        let span = `<span>${char}</span>`;
-        typingText.innerHTML += span;
+    paragraphs[randomIndex].split("").forEach((char,index)=>{
+        const span = document.createElement("span");
+        span.innerText = char;
+        if(index === 0) span.classList.add("current");
+        typingText.appendChild(span);
     });
-    typingText.querySelectorAll("span")[0].classList.add("current");
-    
-    [span_7](start_span)// Resetting variables[span_7](end_span)
     charIndex = mistakes = 0;
     timeLeft = maxTime;
-    isTyping = false;
-    clearInterval(timer);
-    
-    // UI Reset
-    timeTag.innerText = timeLeft + "s";
+    testEnded = false;
+    timeDisplay.innerText = timeLeft+"s";
     wpmTag.innerText = 0;
     mistakeTag.innerText = 0;
     accuracyTag.innerText = "0%";
     inpField.value = "";
+    inpField.disabled = false;
+    inpField.focus();
+    clearInterval(timer);
+    isTyping = false;
 }
 
-function initTyping() {
-    let characters = typingText.querySelectorAll("span");
-    let typedChar = inpField.value.split("")[charIndex];
-
-    if(charIndex < characters.length && timeLeft > 0) {
-        if(!isTyping) {
-            timer = setInterval(updateTimer, 1000);
-            isTyping = true;
-        }
-
-        [span_8](start_span)if(typedChar == null) { // Handle backspace[span_8](end_span)
-            if(charIndex > 0) {
-                charIndex--;
-                if(characters[charIndex].classList.contains("incorrect")) mistakes--;
-                characters[charIndex].classList.remove("correct", "incorrect");
-            }
-        } else {
-            if(characters[charIndex].innerText === typedChar) {
-                characters[charIndex].classList.add("correct");
-            } else {
-                mistakes++;
-                characters[charIndex].classList.add("incorrect");
-            }
-            charIndex++;
-        }
-        
-        characters.forEach(span => span.classList.remove("current"));
-        if(charIndex < characters.length) characters[charIndex].classList.add("current");
-
-        [span_9](start_span)//[span_9](end_span) Calculations
-        let wpm = Math.round(((charIndex - mistakes) / 5) / ((maxTime - timeLeft) / 60));
-        wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
-        let accuracy = charIndex > 0 ? Math.round(((charIndex - mistakes) / charIndex) * 100) : 0;
-
-        wpmTag.innerText = wpm;
-        mistakeTag.innerText = mistakes;
-        accuracyTag.innerText = accuracy + "%";
-    } else {
-        clearInterval(timer);
-    }
-}
-
-function updateTimer() {
-    if(timeLeft > 0) {
-        timeLeft--;
-        timeTag.innerText = timeLeft + "s";
-    } else {
-        clearInterval(timer);
-    }
-}
-
-function setTime(t) {
+function setTime(t){
     maxTime = t;
-    [span_10](start_span)// Update button UI[span_10](end_span)
     document.querySelectorAll(".settings button").forEach(btn => btn.classList.remove("active"));
     event.target.classList.add("active");
     loadParagraph();
 }
 
-[span_11](start_span)// Event Listeners[span_11](end_span)
+function initTyping(){
+    if(testEnded) return; // Stop typing after test ends
+    const characters = typingText.querySelectorAll("span");
+    let typedChar = inpField.value[charIndex];
+
+    if(!isTyping){
+        timer = setInterval(updateTimer,1000);
+        isTyping = true;
+    }
+
+    if(charIndex < characters.length){
+        if(typedChar == null) charIndex--;
+        else{
+            if(typedChar === characters[charIndex].innerText){
+                characters[charIndex].classList.add("correct");
+                characters[charIndex].classList.remove("incorrect");
+            } else {
+                characters[charIndex].classList.add("incorrect");
+                characters[charIndex].classList.remove("correct");
+                mistakes++;
+            }
+            characters.forEach(span => span.classList.remove("current"));
+            charIndex++;
+            if(charIndex < characters.length) characters[charIndex].classList.add("current");
+        }
+    }
+
+    // Update results live
+    let wpm = Math.round(((charIndex - mistakes)/5)/((maxTime - timeLeft)/60));
+    wpm = wpm < 0 || !wpm || wpm===Infinity ? 0 : wpm;
+    let accuracy = charIndex>0 ? Math.round(((charIndex - mistakes)/charIndex)*100) : 0;
+    wpmTag.innerText = wpm;
+    mistakeTag.innerText = mistakes;
+    accuracyTag.innerText = accuracy+"%";
+}
+
+function updateTimer(){
+    if(timeLeft>0){
+        timeLeft--;
+        timeDisplay.innerText = timeLeft+"s";
+    } else{
+        clearInterval(timer);
+        endTest();
+    }
+}
+
+function endTest(){
+    testEnded = true;
+    inpField.disabled = true; // Stop typing
+    const characters = typingText.querySelectorAll("span");
+    // Highlight remaining characters as not typed
+    for(let i=charIndex;i<characters.length;i++){
+        characters[i].classList.remove("current");
+    }
+    // Final WPM and accuracy calculation
+    let wpm = Math.round(((charIndex - mistakes)/5)/(maxTime/60));
+    wpm = wpm<0||!wpm||wpm===Infinity?0:wpm;
+    let accuracy = charIndex>0 ? Math.round(((charIndex - mistakes)/charIndex)*100) : 0;
+    wpmTag.innerText = wpm;
+    mistakeTag.innerText = mistakes;
+    accuracyTag.innerText = accuracy+"%";
+}
+
 refreshBtn.addEventListener("click", loadParagraph);
 inpField.addEventListener("input", initTyping);
-document.addEventListener("keydown", () => inpField.focus());
-typingText.addEventListener("click", () => inpField.focus());
 
-// Initialize first load
 loadParagraph();
 </script>
+
 </body>
 </html>
