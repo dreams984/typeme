@@ -3,191 +3,185 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TYPEME | Official Typing Test</title>
+    <title>TYPEME | Typing Speed Test</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
         
-        [span_0](start_span)/*[span_0](end_span) General Reset */
         *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-        body{background:#f8f9fa;display:flex;flex-direction:column;align-items:center;padding:20px;}
+        body{background:#f0f2f5;display:flex;flex-direction:column;align-items:center;padding:15px;}
         
-        /* Custom Logo for TYPEME */
-        .logo { font-size: 50px; font-weight: 800; color: #17A2B8; margin-bottom: 25px; text-transform: uppercase; letter-spacing: -1px; }
-        .logo span { background: #17A2B8; color: #fff; padding: 0 15px; border-radius: 10px; margin-left: 2px; }
+        [span_0](start_span)/* TYPEME Logo[span_0](end_span) */
+        .logo{font-size:clamp(30px, 6vw, 45px);font-weight:700;color:#2c3e50;text-align:center;margin-bottom: 20px;}
+        .logo span{background:#17A2B8;color:#fff;padding:0 12px;border-radius:8px;margin-left: 5px;}
         
-        [span_1](start_span)/*[span_1](end_span) Main Container */
-        .wrapper{width:100%;max-width:850px;background:#fff;padding:40px;border-radius:25px;box-shadow:0 20px 50px rgba(0,0,0,0.08); border: 1px solid #eee;}
+        .wrapper{width:100%;max-width:800px;background:#fff;padding:35px;border-radius:20px;box-shadow:0 10px 30px rgba(0,0,0,0.1);}
         
-        [span_2](start_span)/*[span_2](end_span) Time Settings */
-        .settings{display:flex;justify-content:center;gap:15px;margin-bottom:30px;}
-        .settings button{padding:12px 24px;border:2px solid #f0f0f0;background:none;border-radius:30px;cursor:pointer;font-weight:600;transition: 0.3s;}
-        .settings button.active{background:#17A2B8;color:#fff;border-color:#17A2B8; box-shadow: 0 4px 15px rgba(23,162,184,0.3);}
+        [span_1](start_span)/* Timer Buttons[span_1](end_span) */
+        .settings{display:flex;justify-content:center;gap:10px;margin-bottom:20px;flex-wrap:wrap;}
+        .settings button{padding:8px 16px;border:1px solid #ddd; border-radius:20px;cursor:pointer; background: white;}
+        .settings button.active{background:#17A2B8;color:#fff; border-color: #17A2B8;}
         
-        [span_3](start_span)/*[span_3](end_span) Typing Area */
-        .typing-text{background:#fdfdfd;padding:30px;border-radius:15px;font-size:26px;line-height:1.6;color:#333;margin-bottom:30px;border: 1px solid #f1f1f1; min-height: 150px;}
+        [span_2](start_span)/* Typing Area[span_2](end_span) */
+        .typing-text{max-height:250px;overflow:auto;background:#f9f9f9;padding:15px;border-radius:10px;font-size:22px;line-height:1.6; border: 1px solid #eee; margin-bottom: 20px;}
         .typing-text span.correct{color:#28a745;}
-        .typing-text span.incorrect{color:#dc3545; background: #ffe6e6; border-radius: 4px;}
-        .typing-text span.current{border-bottom: 4px solid #17A2B8; color: #17A2B8;}
+        .typing-text span.incorrect{color:#dc3545; background: #ffd7d7; border-radius: 4px;}
+        .typing-text span.current{text-decoration:underline; color: #17A2B8;}
         
         .input-field{position:absolute;opacity:0;pointer-events:none;}
         
-        [span_4](start_span)/*[span_4](end_span) Results Dashboard */
-        .result-box { display: flex; justify-content: space-around; background: #2c3e50; padding: 25px; border-radius: 20px; color: #fff; text-align: center; margin-bottom: 25px;}
-        .result-box li { list-style: none; flex: 1; border-right: 1px solid #444; }
-        .result-box li:last-child { border-right: none; }
-        .result-box span { font-size: 14px; text-transform: uppercase; opacity: 0.8; display: block; margin-bottom: 5px; }
-        .result-box b { font-size: 32px; color: #17A2B8; display: block; }
+        [span_3](start_span)/* Result Dashboard[span_3](end_span) */
+        .result-details{display:flex; justify-content: space-around; background: #2c3e50; padding: 20px; border-radius: 12px; color: #fff; list-style: none; margin-bottom: 20px;}
+        .result-details li b{color: #17A2B8; font-size: 24px; display: block;}
         
-        .btn-refresh{width: 100%; background:#17A2B8; color:#fff; border:none; padding:18px; border-radius:15px; cursor:pointer; font-size:20px; font-weight:700; transition:0.3s;}
-        .btn-refresh:hover{background:#138496; transform: scale(1.01);}
-
-        /* AdSense Placements */
-        .ad-space { width: 100%; max-width: 850px; margin: 20px 0; min-height: 100px; display: flex; align-items: center; justify-content: center; background: #f1f1f1; border: 1px dashed #ccc; color: #888; font-size: 13px; }
+        .btn-refresh{width: 100%; background:#17A2B8;color:#fff;border:none;padding:15px;border-radius:10px;cursor:pointer; font-size: 18px; font-weight: 600;}
+        
+        [span_4](start_span)/* AdSense Slots[span_4](end_span) */
+        .ad-slot{width: 100%; max-width: 800px; margin: 15px 0; background: #e9ecef; border: 1px dashed #bbb; text-align: center; padding: 10px; color: #777; font-size: 12px;}
     </style>
 </head>
 <body>
 
-    <div class="logo">TYPE<span>ME</span></div>
+<h1 class="logo">TYPE<span>ME</span></h1>
 
-    <div class="ad-space">
-        GOOGLE ADSENSE - TOP BANNER
+<div class="ad-slot">
+    ADSENSE TOP AD
+</div>
+
+<div class="wrapper">
+    <div class="settings">
+        <button onclick="setTime(15)">15s</button>
+        <button onclick="setTime(30)">30s</button>
+        <button class="active" onclick="setTime(60)">60s</button>
+        <button onclick="setTime(120)">120s</button>
     </div>
 
-    <div class="wrapper">
-        <div class="settings">
-            <button onclick="setTime(15)">15s</button>
-            <button onclick="setTime(30)">30s</button>
-            <button class="active" onclick="setTime(60)">60s</button>
-            <button onclick="setTime(120)">120s</button>
-        </div>
+    <input type="text" class="input-field">
+    <div class="typing-text"><p></p></div>
 
-        <input type="text" class="input-field">
-        <div class="typing-text"><p></p></div>
+    <ul class="result-details">
+        <li>Time: <b>60s</b></li>
+        <li>WPM: <b>0</b></li>
+        <li>Errors: <b>0</b></li>
+        <li>Accuracy: <b>0%</b></li>
+    </ul>
+    
+    <button class="btn-refresh">Restart Test</button>
+</div>
 
-        <ul class="result-box">
-            <li><span>Time Left</span><b>60s</b></li>
-            <li><span>WPM</span><b>0</b></li>
-            <li><span>Mistakes</span><b>0</b></li>
-            <li><span>Accuracy</span><b>0%</b></li>
-        </ul>
+<div class="ad-slot">
+    ADSENSE BOTTOM AD
+</div>
 
-        <button class="btn-refresh">RESTART TEST</button>
-    </div>
+<script>
+const typingText = document.querySelector(".typing-text p"),
+      inpField = document.querySelector(".input-field"),
+      refreshBtn = document.querySelector(".btn-refresh"),
+      timeTag = document.querySelectorAll(".result-details b")[0],
+      wpmTag = document.querySelectorAll(".result-details b")[1],
+      mistakeTag = document.querySelectorAll(".result-details b")[2],
+      accuracyTag = document.querySelectorAll(".result-details b")[3];
 
-    <div class="ad-space">
-        GOOGLE ADSENSE - BOTTOM BANNER
-    </div>
+let timer, maxTime = 60, timeLeft = maxTime, charIndex = 0, mistakes = 0, isTyping = false;
 
-    <script>
-        const typingText = document.querySelector(".typing-text p"),
-        inpField = document.querySelector(".input-field"),
-        refreshBtn = document.querySelector(".btn-refresh"),
-        timeTag = document.querySelectorAll(".result-box b")[0],
-        wpmTag = document.querySelectorAll(".result-box b")[1],
-        mistakeTag = document.querySelectorAll(".result-box b")[2],
-        accuracyTag = document.querySelectorAll(".result-box b")[3];
+[span_5](start_span)// Paragraph samples[span_5](end_span)
+const paragraphs = [
+    "Typing speed is a critical skill for productivity in the modern world. Practice makes perfect.",
+    "Consistency is key when learning a new skill. Try to type for at least ten minutes every day.",
+    "The quick brown fox jumps over the lazy dog. This sentence contains every letter of the alphabet.",
+    "Focus on accuracy before speed. Once you stop making mistakes, your speed will naturally increase."
+];
 
-        let timer, maxTime = 60, timeLeft = maxTime, charIndex = 0, mistakes = 0, isTyping = false;
+function loadParagraph() {
+    const ranIndex = Math.floor(Math.random() * paragraphs.length);
+    typingText.innerHTML = "";
+    [span_6](start_span)// split text into spans[span_6](end_span)
+    paragraphs[ranIndex].split("").forEach(char => {
+        let span = `<span>${char}</span>`;
+        typingText.innerHTML += span;
+    });
+    typingText.querySelectorAll("span")[0].classList.add("current");
+    
+    [span_7](start_span)// Resetting variables[span_7](end_span)
+    charIndex = mistakes = 0;
+    timeLeft = maxTime;
+    isTyping = false;
+    clearInterval(timer);
+    
+    // UI Reset
+    timeTag.innerText = timeLeft + "s";
+    wpmTag.innerText = 0;
+    mistakeTag.innerText = 0;
+    accuracyTag.innerText = "0%";
+    inpField.value = "";
+}
 
-        [span_5](start_span)//[span_5](end_span) Paragraphs for test
-        const paragraphs = [
-            "Practice daily to improve your typing speed and accuracy. Consistency is key!",
-            "Typing fast helps you save time and boost productivity. Focus on accuracy first.",
-            "Use all your fingers while typing and avoid looking at the keyboard. This increases speed.",
-            "The more you practice, the better your speed and accuracy will become over time."
-        ];
+function initTyping() {
+    let characters = typingText.querySelectorAll("span");
+    let typedChar = inpField.value.split("")[charIndex];
 
-        [span_6](start_span)//[span_6](end_span) Initializing Test
-        function loadParagraph() {
-            const ranIndex = Math.floor(Math.random() * paragraphs.length);
-            typingText.innerHTML = "";
-            paragraphs[ranIndex].split("").forEach(char => {
-                let span = `<span>${char}</span>`;
-                typingText.innerHTML += span;
-            });
-            typingText.querySelectorAll("span")[0].classList.add("current");
-            document.addEventListener("keydown", () => inpField.focus());
-            typingText.addEventListener("click", () => inpField.focus());
+    if(charIndex < characters.length && timeLeft > 0) {
+        if(!isTyping) {
+            timer = setInterval(updateTimer, 1000);
+            isTyping = true;
         }
 
-        [span_7](start_span)// [cite: 14-22] Typing Logic
-        function initTyping() {
-            let characters = typingText.querySelectorAll("span");
-            let typedChar = inpField.value.split("")[charIndex];
-            if(charIndex < characters.length && timeLeft > 0) {
-                if(!isTyping) {
-                    timer = setInterval(initTimer, 1000);
-                    isTyping = true;
-                }
-                if(typedChar == null) { // Backspace
-                    if(charIndex > 0) {
-                        charIndex--;
-                        if(characters[charIndex].classList.contains("incorrect")) mistakes--;
-                        characters[charIndex].classList.remove("correct", "incorrect");
-                    }
-                } else {
-                    if(characters[charIndex].innerText == typedChar) {
-                        characters[charIndex].classList.add("correct");
-                    } else {
-                        mistakes++;
-                        characters[charIndex].classList.add("incorrect");
-                    }
-                    charIndex++;
-                }
-                characters.forEach(span => span.classList.remove("current"));
-                if(charIndex < characters.length) characters[charIndex].classList.add("current");
-
-                // Calculating Stats
-                let wpm = Math.round(((charIndex - mistakes)  / 5) / (maxTime - timeLeft) * 60);
-                wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
-                let accuracy = charIndex > 0 ? Math.round(((charIndex - mistakes) / charIndex) * 100) : 0;
-                
-                wpmTag.innerText = wpm;
-                mistakeTag.innerText = mistakes;
-                accuracyTag.innerText = `${accuracy}%`;
-            } else {
-                clearInterval(timer);
-                inpField.value = "";
-            }   
-        }
-
-        [cite_start]//[span_7](end_span) Timer Logic
-        function initTimer() {
-            if(timeLeft > 0) {
-                timeLeft--;
-                timeTag.innerText = timeLeft + "s";
-                let wpm = Math.round(((charIndex - mistakes)  / 5) / (maxTime - timeLeft) * 60);
-                wpmTag.innerText = wpm;
-            } else {
-                clearInterval(timer);
+        [span_8](start_span)if(typedChar == null) { // Handle backspace[span_8](end_span)
+            if(charIndex > 0) {
+                charIndex--;
+                if(characters[charIndex].classList.contains("incorrect")) mistakes--;
+                characters[charIndex].classList.remove("correct", "incorrect");
             }
+        } else {
+            if(characters[charIndex].innerText === typedChar) {
+                characters[charIndex].classList.add("correct");
+            } else {
+                mistakes++;
+                characters[charIndex].classList.add("incorrect");
+            }
+            charIndex++;
         }
+        
+        characters.forEach(span => span.classList.remove("current"));
+        if(charIndex < characters.length) characters[charIndex].classList.add("current");
 
-        function setTime(t) {
-            maxTime = t;
-            timeLeft = t;
-            timeTag.innerText = t + "s";
-            document.querySelectorAll(".settings button").forEach(btn => btn.classList.remove("active"));
-            event.target.classList.add("active");
-            resetTest();
-        }
+        [span_9](start_span)//[span_9](end_span) Calculations
+        let wpm = Math.round(((charIndex - mistakes) / 5) / ((maxTime - timeLeft) / 60));
+        wpm = wpm < 0 || !wpm || wpm === Infinity ? 0 : wpm;
+        let accuracy = charIndex > 0 ? Math.round(((charIndex - mistakes) / charIndex) * 100) : 0;
 
-        function resetTest() {
-            loadParagraph();
-            clearInterval(timer);
-            timeLeft = maxTime;
-            charIndex = mistakes = isTyping = 0;
-            inpField.value = "";
-            timeTag.innerText = timeLeft + "s";
-            wpmTag.innerText = 0;
-            mistakeTag.innerText = 0;
-            accuracyTag.innerText = "0%";
-        }
+        wpmTag.innerText = wpm;
+        mistakeTag.innerText = mistakes;
+        accuracyTag.innerText = accuracy + "%";
+    } else {
+        clearInterval(timer);
+    }
+}
 
-        loadParagraph();
-        inpField.addEventListener("input", initTyping);
-        refreshBtn.addEventListener("click", resetTest);
-    </script>
+function updateTimer() {
+    if(timeLeft > 0) {
+        timeLeft--;
+        timeTag.innerText = timeLeft + "s";
+    } else {
+        clearInterval(timer);
+    }
+}
+
+function setTime(t) {
+    maxTime = t;
+    [span_10](start_span)// Update button UI[span_10](end_span)
+    document.querySelectorAll(".settings button").forEach(btn => btn.classList.remove("active"));
+    event.target.classList.add("active");
+    loadParagraph();
+}
+
+[span_11](start_span)// Event Listeners[span_11](end_span)
+refreshBtn.addEventListener("click", loadParagraph);
+inpField.addEventListener("input", initTyping);
+document.addEventListener("keydown", () => inpField.focus());
+typingText.addEventListener("click", () => inpField.focus());
+
+// Initialize first load
+loadParagraph();
+</script>
 </body>
 </html>
-
