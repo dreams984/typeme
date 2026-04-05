@@ -2,157 +2,179 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+
+<!-- ✅ Google Search Console Verification -->
+<meta name="google-site-verification" content="PASTE_YOUR_SEARCH_CONSOLE_CODE_HERE">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TYPEME</title>
 
-<!-- Firebase -->
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<title>TYPEME - 1 Minute Typing Test</title>
 
-<script>
-const firebaseConfig = {
-  apiKey: "AIzaSyDx94Clq07I9h-ewtOOY56e9mVpjwMfDFo",
-  authDomain: "http://typeme-web.firebaseapp.com",
-  projectId: "typeme-web"
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
+<meta name="description" content="Free 1 minute typing test. Check your speed (WPM) and accuracy on TYPEME.">
 
-// LOAD SETTINGS
-db.collection("settings").doc("site").get().then(doc=>{
-if(doc.exists){
-
-// VERIFY CODE
-document.write(doc.data().verifyCode || "");
-
-// ADS
-document.getElementById("topAd").innerHTML = doc.data().topAd || "";
-document.getElementById("middleAd").innerHTML = doc.data().middleAd || "";
-document.getElementById("bottomAd").innerHTML = doc.data().bottomAd || "";
-
-}
-});
-</script>
+<!-- ✅ AdSense Verification Script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXX"
+crossorigin="anonymous"></script>
 
 <style>
-body{font-family:Poppins;background:#f0f2f5;text-align:center;}
-.logo{font-size:30px;color:#17A2B8;font-weight:bold;}
-.logo span{background:#17A2B8;color:#fff;padding:5px;border-radius:5px;}
-.wrapper{background:#fff;padding:20px;margin:20px;border-radius:10px;}
-.typing-text{background:#eee;padding:10px;border-radius:5px;}
-.correct{color:green;}
-.incorrect{color:red;}
-.ad-box{margin:15px 0;}
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f172a;
+    color: #e5e7eb;
+}
+
+header {
+    background: #020617;
+    padding: 15px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+#textDisplay {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.6;
+}
+
+.correct {
+    color: #22c55e;
+}
+
+.wrong {
+    color: #ef4444;
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+}
+
+.stats {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.ad {
+    margin: 25px 0;
+    padding: 25px;
+    background: #1e293b;
+    text-align: center;
+    border-radius: 10px;
+}
 </style>
 </head>
 
 <body>
 
-<h1 class="logo">TYPE<span>ME</span></h1>
+<header>
+    <h1>TYPEME</h1>
+    <p>1 Minute Typing Test</p>
+</header>
 
-<!-- 🔝 TOP AD -->
-<div id="topAd" class="ad-box"></div>
+<div class="container">
 
-<div class="wrapper">
+    <!-- ✅ TOP AD -->
+    <div class="ad">
+        <!-- YAHAN GOOGLE ADSENSE AD UNIT LAGAO -->
+        <p>Ad Space Top</p>
+    </div>
 
-<input type="text" id="input" autofocus>
-<div class="typing-text" id="text"></div>
+    <div id="textDisplay"></div>
 
-<p>Time: <span id="time">60</span></p>
-<p>WPM: <span id="wpm">0</span></p>
-<p>Errors: <span id="errors">0</span></p>
+    <textarea id="input" placeholder="Start typing here..."></textarea>
 
-<button onclick="startTest()">Restart</button>
+    <div class="stats">
+        ⏱ Time: <span id="time">60</span>s |
+        ⚡ WPM: <span id="wpm">0</span> |
+        🎯 Accuracy: <span id="accuracy">0</span>%
+    </div>
+
+    <!-- ✅ MIDDLE AD -->
+    <div class="ad">
+        <!-- YAHAN BHI ADS LAGAO -->
+        <p>Ad Space Middle</p>
+    </div>
 
 </div>
 
-<!-- 📍 MIDDLE AD -->
-<div id="middleAd" class="ad-box"></div>
-
-<!-- 🔻 BOTTOM AD -->
-<div id="bottomAd" class="ad-box"></div>
-
 <script>
-// WORD POOLS
-const paragraphs = {
-60:["Practice daily to improve typing speed","Typing fast requires focus and accuracy","Consistency is key to mastering typing"],
-30:["Typing improves productivity","Practice makes perfect"],
-15:["Quick typing helps","Stay focused"]
-};
+const text = "The quick brown fox jumps over the lazy dog. This is a typing test for TYPEME website. Practice daily to improve your speed and accuracy.";
 
-let textEl=document.getElementById("text");
-let input=document.getElementById("input");
+let time = 60;
+let timerStarted = false;
 
-let time=60,timer,index=0,errors=0;
+const textDisplay = document.getElementById("textDisplay");
+const input = document.getElementById("input");
 
-// GENERATE TEXT
-function generateMoreText(){
-let pool=paragraphs[60];
-let text="";
-for(let i=0;i<30;i++){
-text+=pool[Math.floor(Math.random()*pool.length)]+" ";
+function renderText() {
+    textDisplay.innerHTML = text.split("").map(char => `<span>${char}</span>`).join("");
 }
+renderText();
 
-text.split("").forEach((c,i)=>{
-let span=document.createElement("span");
-span.innerText=c;
-if(i===0 && index===0) span.classList.add("current");
-textEl.appendChild(span);
-});
-}
+input.addEventListener("input", () => {
+    if (!timerStarted) {
+        startTimer();
+        timerStarted = true;
+    }
 
-// START TEST
-function startTest(){
-textEl.innerHTML="";
-generateMoreText();
+    const inputText = input.value.split("");
+    const spanChars = textDisplay.querySelectorAll("span");
 
-time=60; index=0; errors=0;
-input.value="";
-clearInterval(timer);
+    let correct = 0;
 
-timer=setInterval(()=>{
-time--;
-document.getElementById("time").innerText=time;
+    spanChars.forEach((charSpan, index) => {
+        const typedChar = inputText[index];
 
-if(time<=0){
-clearInterval(timer);
-saveResult();
-}
-},1000);
-}
+        if (typedChar == null) {
+            charSpan.classList.remove("correct", "wrong");
+        } 
+        else if (typedChar === charSpan.innerText) {
+            charSpan.classList.add("correct");
+            charSpan.classList.remove("wrong");
+            correct++;
+        } 
+        else {
+            charSpan.classList.add("wrong");
+            charSpan.classList.remove("correct");
+        }
+    });
 
-// TYPING
-input.addEventListener("input",()=>{
-let spans=textEl.querySelectorAll("span");
-let val=input.value;
-
-// AUTO EXTEND TEXT
-if(index >= spans.length-1){
-generateMoreText();
-}
-
-if(val[index]===spans[index].innerText){
-spans[index].classList.add("correct");
-}else{
-spans[index].classList.add("incorrect");
-errors++;
-}
-index++;
-
-let wpm=Math.round((index/5)/((60-time)/60));
-document.getElementById("wpm").innerText=wpm||0;
-document.getElementById("errors").innerText=errors;
+    let accuracy = (correct / inputText.length) * 100;
+    document.getElementById("accuracy").innerText = accuracy ? accuracy.toFixed(0) : 0;
 });
 
-// SAVE RESULT
-function saveResult(){
-db.collection("results").add({
-wpm:document.getElementById("wpm").innerText,
-errors:errors,
-date:new Date()
-});
+function startTimer() {
+    const interval = setInterval(() => {
+        time--;
+        document.getElementById("time").innerText = time;
+
+        if (time <= 0) {
+            clearInterval(interval);
+            calculateResult();
+        }
+    }, 1000);
 }
 
-startTest();
+function calculateResult() {
+    let words = input.value.trim().split(" ").length;
+    document.getElementById("wpm").innerText = words;
+}
 </script>
 
 </body>
