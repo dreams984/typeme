@@ -3,134 +3,163 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TYPEME | Typing Test</title>
+<title>TYPEME PRO</title>
 
 <!-- Firebase -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-// 🔥 APNA FIREBASE CODE YAHA LGAO
 const firebaseConfig = {
   apiKey: "YOUR-API-KEY",
-  authDomain: "YOUR-PROJECT.firebaseapp.com",
-  projectId: "YOUR-PROJECT"
+  authDomain: "YOUR.firebaseapp.com",
+  projectId: "YOUR"
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
-// 🔥 LOAD SETTINGS (ADS + VERIFY)
+// LOAD ADS + VERIFY
 db.collection("settings").doc("site").get().then(doc=>{
 if(doc.exists){
 document.write(doc.data().verifyCode || "");
+document.getElementById("ads").innerHTML = doc.data().adCode || "";
 }
 });
 </script>
 
 <style>
 body{font-family:Poppins;background:#f0f2f5;text-align:center;}
-.logo{font-size:30px;color:#17A2B8;font-weight:bold;}
-.logo span{background:#17A2B8;color:#fff;padding:5px;border-radius:5px;}
-.boxes{display:flex;justify-content:center;gap:20px;margin:20px;}
-.box{background:#fff;padding:20px;border-radius:10px;cursor:pointer;}
-.wrapper{display:none;background:#fff;padding:20px;margin:20px;border-radius:10px;}
-.typing-text{background:#eee;padding:10px;}
-.correct{color:green;} .incorrect{color:red;}
+.logo{font-size:32px;color:#17A2B8;font-weight:bold;}
+.menu{display:flex;gap:10px;justify-content:center;margin:20px;}
+.menu button{padding:10px;border:none;background:#17A2B8;color:#fff;border-radius:5px;}
+
+.section{display:none;background:#fff;margin:20px;padding:20px;border-radius:10px;}
+
+.typing-text span.correct{color:green;}
+.typing-text span.incorrect{color:red;}
+
+.key{padding:10px;border:1px solid #ccc;margin:3px;display:inline-block;}
+.active{background:#17A2B8;color:#fff;}
 </style>
 </head>
 
 <body>
 
-<h1 class="logo">TYPE<span>ME</span></h1>
+<h1 class="logo">TYPEME PRO</h1>
 
-<!-- HOME -->
-<div class="boxes">
-<div class="box" onclick="startTest()">Typing Test</div>
-<div class="box">Learn Typing (Soon)</div>
+<div class="menu">
+<button onclick="show('test')">Test</button>
+<button onclick="show('lessons')">Lessons</button>
+<button onclick="show('practice')">Practice</button>
 </div>
 
-<!-- ADS -->
-<div id="adsTop"></div>
+<div id="ads"></div>
 
 <!-- TEST -->
-<div class="wrapper" id="testBox">
+<div class="section" id="test">
 <h2>Typing Test</h2>
-<input type="text" id="input" autofocus>
-<div class="typing-text" id="text"></div>
-
-<p>Time: <span id="time">60</span></p>
+<input id="testInput">
+<div id="testText" class="typing-text"></div>
 <p>WPM: <span id="wpm">0</span></p>
-<p>Errors: <span id="errors">0</span></p>
+</div>
 
-<button onclick="startTest()">Restart</button>
+<!-- LESSONS -->
+<div class="section" id="lessons">
+<h2>Typing Lessons (A-Z)</h2>
+<div id="lessonText"></div>
+<input id="lessonInput">
+<p>Lesson: <span id="lessonName"></span></p>
+</div>
+
+<!-- PRACTICE -->
+<div class="section" id="practice">
+<h2>Practice (ASDF Row)</h2>
+<div id="keys"></div>
+<input id="practiceInput">
 </div>
 
 <script>
-// 🔥 LOAD ADS
-db.collection("settings").doc("site").get().then(doc=>{
-if(doc.exists){
-document.getElementById("adsTop").innerHTML = doc.data().adCode;
-}
-});
-
-// Typing Logic
-let textEl=document.getElementById("text");
-let input=document.getElementById("input");
-let timeEl=document.getElementById("time");
-
-let time=60, timer, index=0, errors=0;
-
-const words=["typing improves speed","practice daily","focus on accuracy"];
-
-function generateText(){
-let t="";
-for(let i=0;i<50;i++){
-t+=words[Math.floor(Math.random()*words.length)]+" ";
-}
-textEl.innerHTML=t.split("").map(c=>`<span>${c}</span>`).join("");
+// NAV
+function show(id){
+document.querySelectorAll(".section").forEach(s=>s.style.display="none");
+document.getElementById(id).style.display="block";
 }
 
-function startTest(){
-document.getElementById("testBox").style.display="block";
-generateText();
-time=60; index=0; errors=0;
-input.value="";
-clearInterval(timer);
+// ---------------- TEST ----------------
+let testWords=["practice typing","improve speed","focus accuracy"];
+let testIndex=0;
 
-timer=setInterval(()=>{
-time--;
-timeEl.innerText=time;
-if(time<=0){
-clearInterval(timer);
-saveResult();
+function loadTest(){
+let text="";
+for(let i=0;i<40;i++){
+text+=testWords[Math.floor(Math.random()*testWords.length)]+" ";
 }
-},1000);
+testText.innerHTML=text.split("").map(c=>`<span>${c}</span>`).join("");
 }
+loadTest();
 
-input.addEventListener("input",()=>{
-let spans=textEl.querySelectorAll("span");
-let val=input.value;
+testInput.addEventListener("input",()=>{
+let spans=testText.querySelectorAll("span");
+let val=testInput.value;
 
-if(val[index]===spans[index].innerText){
-spans[index].classList.add("correct");
+if(val[testIndex]===spans[testIndex].innerText){
+spans[testIndex].classList.add("correct");
 }else{
-spans[index].classList.add("incorrect");
-errors++;
+spans[testIndex].classList.add("incorrect");
 }
-index++;
-
-let wpm=Math.round((index/5)/((60-time)/60));
-document.getElementById("wpm").innerText=wpm||0;
-document.getElementById("errors").innerText=errors;
+testIndex++;
 });
 
-function saveResult(){
-db.collection("results").add({
-wpm:document.getElementById("wpm").innerText,
-errors:errors,
-date:new Date()
+// ---------------- LESSONS ----------------
+let lessons=[
+{title:"Home Row (ASDF)", text:"asdf asdf asdf"},
+{title:"Top Row (QWER)", text:"qwer qwer qwer"},
+{title:"Bottom Row (ZXCV)", text:"zxcv zxcv zxcv"},
+{title:"Full A-Z", text:"abcdefghijklmnopqrstuvwxyz"}
+];
+
+let currentLesson=0;
+
+function loadLesson(){
+lessonText.innerHTML=lessons[currentLesson].text;
+lessonName.innerText=lessons[currentLesson].title;
+lessonInput.value="";
+}
+loadLesson();
+
+lessonInput.addEventListener("input",()=>{
+if(lessonInput.value === lessons[currentLesson].text){
+currentLesson++;
+if(currentLesson<lessons.length){
+loadLesson();
+}else{
+alert("Course Complete 🎉");
+}
+}
+});
+
+// ---------------- PRACTICE ----------------
+let practiceKeys="asdf jkl;".split("");
+
+function loadPractice(){
+keys.innerHTML="";
+practiceKeys.forEach(k=>{
+let span=document.createElement("span");
+span.innerText=k;
+span.classList.add("key");
+keys.appendChild(span);
 });
 }
+loadPractice();
+
+practiceInput.addEventListener("input",()=>{
+let val=practiceInput.value.slice(-1);
+document.querySelectorAll(".key").forEach(k=>{
+k.classList.remove("active");
+if(k.innerText===val) k.classList.add("active");
+});
+});
+
 </script>
 
 </body>
