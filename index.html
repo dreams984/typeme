@@ -17,23 +17,20 @@ const firebaseConfig = {
 };
 firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
-
-// LOAD VERIFY CODE
-db.collection("settings").doc("site").get().then(doc=>{
-if(doc.exists){
-document.write(doc.data().verifyCode || "");
-}
-});
 </script>
 
 <style>
 body{font-family:Poppins;background:#f0f2f5;text-align:center;}
-.logo{font-size:30px;color:#17A2B8;font-weight:bold;}
+.logo{font-size:32px;color:#17A2B8;font-weight:bold;}
 .logo span{background:#17A2B8;color:#fff;padding:5px;border-radius:5px;}
+
 .wrapper{background:#fff;padding:20px;margin:20px;border-radius:10px;}
 .typing-text{background:#eee;padding:10px;border-radius:5px;}
+
 .correct{color:green;}
 .incorrect{color:red;}
+
+.ad-box{margin:20px 0;}
 </style>
 </head>
 
@@ -41,8 +38,8 @@ body{font-family:Poppins;background:#f0f2f5;text-align:center;}
 
 <h1 class="logo">TYPE<span>ME</span></h1>
 
-<!-- ADS -->
-<div id="adsHere"></div>
+<!-- TOP AD -->
+<div id="topAd" class="ad-box"></div>
 
 <div class="wrapper">
 
@@ -57,19 +54,31 @@ body{font-family:Poppins;background:#f0f2f5;text-align:center;}
 
 </div>
 
+<!-- MIDDLE AD -->
+<div id="middleAd" class="ad-box"></div>
+
+<!-- BOTTOM AD -->
+<div id="bottomAd" class="ad-box"></div>
+
 <script>
-// LOAD ADS
+// 🔥 LOAD SETTINGS (VERIFY + ADS)
 db.collection("settings").doc("site").get().then(doc=>{
 if(doc.exists){
-document.getElementById("adsHere").innerHTML = doc.data().adCode;
+
+// VERIFY CODE
+document.write(doc.data().verifyCode || "");
+
+// ADS LOAD
+document.getElementById("topAd").innerHTML = doc.data().topAd || "";
+document.getElementById("middleAd").innerHTML = doc.data().middleAd || "";
+document.getElementById("bottomAd").innerHTML = doc.data().bottomAd || "";
+
 }
 });
 
-// WORD POOLS
+// TEXT DATA
 const paragraphs = {
-60:["Practice daily to improve typing speed","Typing fast requires focus and accuracy","Consistency is key to mastering typing"],
-30:["Typing improves productivity","Practice makes perfect"],
-15:["Quick typing helps","Stay focused"]
+60:["Practice daily to improve typing speed","Typing fast requires focus","Consistency is key"]
 };
 
 let textEl=document.getElementById("text");
@@ -93,7 +102,7 @@ textEl.appendChild(span);
 });
 }
 
-// START TEST
+// START
 function startTest(){
 textEl.innerHTML="";
 generateMoreText();
@@ -118,7 +127,7 @@ input.addEventListener("input",()=>{
 let spans=textEl.querySelectorAll("span");
 let val=input.value;
 
-// AUTO EXTEND TEXT
+// AUTO EXTEND
 if(index >= spans.length-1){
 generateMoreText();
 }
