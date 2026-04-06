@@ -1,3 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<!-- ✅ Google Search Console Verification -->
+<meta name="google-site-verification" content="PASTE_YOUR_SEARCH_CONSOLE_CODE_HERE">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>TYPEME - 1 Minute Typing Test</title>
+
+<meta name="description" content="Free 1 minute typing test. Check your speed (WPM) and accuracy on TYPEME.">
+
+<!-- ✅ AdSense Verification Script -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2315060387887718"
+     crossorigin="anonymous"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial;
+    background: #0f172a;
+    color: #e5e7eb;
+}
+
+header {
+    background: #020617;
+    padding: 15px;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+#textDisplay {
+    background: #1e293b;
+    padding: 20px;
+    border-radius: 10px;
+    line-height: 1.6;
+
+    max-height: 200px;   /* height limit */
+    overflow-y: auto;    /* scroll enable */
+}
+
+.correct {
+    color: #22c55e;
+}
+
+.wrong {
+    color: #ef4444;
+}
+
+textarea {
+    width: 100%;
+    height: 120px;
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 18px;
+    border-radius: 10px;
+    border: none;
+}
+
+.stats {
+    margin-top: 15px;
+    font-size: 18px;
+}
+
+.ad {
+    margin: 25px 0;
+    padding: 25px;
+    background: #1e293b;
+    text-align: center;
+    border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>TYPEME</h1>
+    <p>1 Minute Typing Test</p>
+</header>
+
+<div class="container">
+
+    <!-- ✅ TOP AD -->
+    <div class="ad">
+        <!-- YAHAN GOOGLE ADSENSE AD UNIT LAGAO -->
+        <p>Ad Space Top</p>
+    </div>
+
+    <div id="textDisplay"></div>
+
+    <textarea id="input" placeholder="Start typing here..."></textarea>
+
+    <div class="stats">
+        ⏱ Time: <span id="time">60</span>s |
+        ⚡ WPM: <span id="wpm">0</span> |
+        🎯 Accuracy: <span id="accuracy">0</span>%
+    </div>
+
+    <!-- ✅ MIDDLE AD -->
+    <div class="ad">
+        <!-- YAHAN BHI ADS LAGAO -->
+        <p>Ad Space Middle</p>
+    </div>
+
+</div>
+
+<script>
+const text = "Typing is an essential skill in today's digital world, where communication and productivity depend heavily on how fast and accurately a person can type. Improving typing speed not only saves time but also enhances focus and efficiency in daily tasks such as writing emails, creating documents, and coding. Consistent practice is the key to mastering typing, as it helps build muscle memory and reduces errors over time. Many people underestimate the importance of accuracy, but it plays a crucial role in effective communication. A good typist maintains a balance between speed and precision. By using tools like TYPEME, users can track their progress, challenge themselves, and gradually improve their performance. Remember, patience and regular practice are the most important factors in becoming a skilled typist. Stay consistent, stay focused, and you will see significant improvement in your typing abilities.";
+
+let time = 60;
 let timerStarted = false;
 
 const textDisplay = document.getElementById("textDisplay");
